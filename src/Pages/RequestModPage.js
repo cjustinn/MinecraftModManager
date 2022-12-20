@@ -46,7 +46,8 @@ export default function RequestModPage() {
                 modData: {
                     requester: requesterName,
                     modName: modName,
-                    link: modLink
+                    link: modLink,
+                    requestedDate: Date.now()
                 }
             }),
             headers: {
