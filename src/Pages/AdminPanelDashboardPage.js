@@ -170,6 +170,7 @@ export default function AdminPanelDashboardPage() {
     }
 
     useEffect(() => {
+        setPage(0);
         reloadTableData(activeFilter);
     }, [ activeFilter, requesterActiveFilter, requesterNameFilter ]);
 
