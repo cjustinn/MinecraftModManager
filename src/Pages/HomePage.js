@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, Grid, IconButton, Skeleton, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import ModTableComponent from '../Components/ModTableComponent';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function HomePage() {
     const [ loading, setLoading] = useState(true);
@@ -55,7 +56,19 @@ export default function HomePage() {
             <Card>
                 <CardContent>
                     <Stack spacing={1}>
-                        <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Confirmed Mod List</Typography>
+                        <Grid container xs={12} spacing={2}>
+                            <Grid item xs={6} justifyContent="start">
+                                <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Confirmed Mod List</Typography>
+                            </Grid>
+                            <Grid item xs={6} alignItems="end" textAlign="end">
+                                <IconButton size="large" onClick={() => getModData()}>
+                                    <RefreshIcon/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+                        <Typography variant="body1" textAlign="start" color="grey.400">
+                            The following mods are part of the modpack.
+                        </Typography>
                         {
                             loading ?
                             <Stack spacing={1}>

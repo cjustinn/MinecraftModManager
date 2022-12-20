@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function AdminPanelDashboardPage() {
     const [ loading, setLoading ] = useState(true);
@@ -273,9 +274,16 @@ export default function AdminPanelDashboardPage() {
             <Card>
                 <CardContent>
                     <Stack spacing={2}>
-                        <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">
-                            Mod Requests
-                        </Typography>
+                        <Grid container xs={12} spacing={2}>
+                            <Grid item xs={6} justifyContent="start">
+                                <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Mod Requests</Typography>
+                            </Grid>
+                            <Grid item xs={6} alignItems="end" textAlign="end">
+                                <IconButton size="large" onClick={() => reloadTableData(activeFilter)}>
+                                    <RefreshIcon/>
+                                </IconButton>
+                            </Grid>
+                        </Grid>
                         <Typography variant="body1" textAlign="start" color="grey.400">
                             {getTableSubtitle()}
                         </Typography>
@@ -301,10 +309,10 @@ export default function AdminPanelDashboardPage() {
                                         <Table>
                                             <TableHead>
                                                 <TableRow>
-                                                    <TableCell align="left">Mod Name</TableCell>
-                                                    <TableCell align="right">Requester</TableCell>
-                                                    <TableCell align="right">Date Requested</TableCell>
-                                                    <TableCell align="right">Controls</TableCell>
+                                                    <TableCell align="left" width="50%">Mod Name</TableCell>
+                                                    <TableCell align="right" width="20%">Requester</TableCell>
+                                                    <TableCell align="right" width="20%">Date Requested</TableCell>
+                                                    <TableCell align="right" width="10%">Controls</TableCell>
                                                 </TableRow>
                                             </TableHead>
                                             <TableBody>

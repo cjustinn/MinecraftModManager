@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 export default function ModTableComponent(props) {
     const { rows } = props;
     const [ page, setPage ] = useState(0);
-    const [ rowsPerPage, setRowsPerPage ] = useState(5);
+    const [ rowsPerPage, setRowsPerPage ] = useState(10);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -20,9 +20,9 @@ export default function ModTableComponent(props) {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell align="left">Mod Name</TableCell>
-                    <TableCell align="right">Requested By</TableCell>
-                    <TableCell align="right">Date Approved</TableCell>
+                    <TableCell align="left" width="50%">Mod Name</TableCell>
+                    <TableCell align="right" width="25%">Requested By</TableCell>
+                    <TableCell align="right" width="25%">Date Approved</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
@@ -43,7 +43,7 @@ export default function ModTableComponent(props) {
                 }
             </TableBody>
             <TableFooter>
-                <TablePagination rowsPerPageOptions={[ 5, 10, 20 ]} colSpan={3} count={rows.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage}/>
+                <TablePagination rowsPerPageOptions={[ 5, 10, 15, 20 ]} colSpan={3} count={rows.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage}/>
             </TableFooter>
         </Table>
     </TableContainer>
