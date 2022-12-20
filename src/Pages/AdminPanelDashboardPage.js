@@ -81,7 +81,8 @@ export default function AdminPanelDashboardPage() {
                                 name: _request.modName,
                                 requester: _request.requester,
                                 link: _request.link,
-                                associatedRequest: modId
+                                associatedRequest: modId,
+                                approvedDate: Date.now()
                             }
                         }),
                         headers: {
