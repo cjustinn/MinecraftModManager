@@ -40,7 +40,7 @@ export default function HomePage() {
     }
 
     return <Grid container spacing={2} my={2} px={2}>
-        <Grid item xs={12} md={4} px={2}>
+        <Grid item xs={12} md={3} px={2}>
             <Stack spacing={2}>
                 <Card>
                     <CardContent>
@@ -95,7 +95,7 @@ export default function HomePage() {
                 </Card>
             </Stack>
         </Grid>
-        <Grid item xs={12} md={8} px={2}>
+        <Grid item xs={12} md={9} px={2}>
             <Stack spacing={2}>
                 <Card>
                     <CardContent>
