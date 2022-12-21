@@ -11,10 +11,13 @@ export default function HomePage() {
     const [ mods, setMods ] = useState([]);
 
     const [ searchQuery, setSearchQuery ] = useState("");
+    const [ resultsFiltered, setResultsFiltered ] = useState(false);
 
     const getModData = (searchMode) => {
         setLoading(true);
         setSuccess(false);
+
+        setResultsFiltered(searchMode);
 
         fetch(`${process.env.REACT_APP_API_URL}${searchMode ? `/mods/search?target=${searchQuery}` : `/mods/all`}`).then(r => r.json()).then(resp => {
             setSuccess(resp.success);
@@ -129,7 +132,12 @@ export default function HomePage() {
                                         mods.length > 0 ?
                                         <ModTableComponent rows={mods}/>
                                         :
-                                        <Typography variant="body1" color="grey.500" textAlign="start">There are currently no confirmed mods in the modpack.</Typography>
+                                        (
+                                            resultsFiltered ?
+                                            <Typography variant="body1" color="grey.500" textAlign="start">There are currently no confirmed mods which match your search parameters.</Typography>
+                                            :
+                                            <Typography variant="body1" color="grey.500" textAlign="start">There are currently no confirmed mods in the modpack.</Typography>
+                                        )
                                     )
                                     :
                                     <Typography variant="body1" color="red" textAlign="start">There was a problem loading the mod list. Please try refreshing the page!</Typography>
