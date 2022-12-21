@@ -30,7 +30,7 @@ function App() {
       <AuthContextProvider>
         <div className="App">
           <header className='App-header'>
-            <SpeedDial ariaLabel='main page nav' sx={{ position: 'fixed', bottom: 16, left: 16 }} icon={<SpeedDialIcon/>} direction="right">
+            <SpeedDial ariaLabel='main page nav' sx={{ position: 'fixed', bottom: 16, right: 16 }} icon={<SpeedDialIcon/>} direction="left">
               <SpeedDialAction key="adminpanel" icon={<AdminPanelSettingsIcon/>} tooltipTitle="Admin Panel" onClick={() => navigate("/admin")}/>
               <SpeedDialAction key="requestmod" icon={<LibraryAddIcon/>} tooltipTitle="Request Mod" onClick={() => navigate("/request")}/>
               <SpeedDialAction key="home" icon={<HomeIcon/>} tooltipTitle="Home" onClick={() => navigate("/")}/>
