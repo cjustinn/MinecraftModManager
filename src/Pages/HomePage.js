@@ -67,7 +67,7 @@ export default function HomePage() {
                 <Card>
                     <CardContent>
                         <Stack spacing={2}>
-                            <Stack spacing={1}>
+                            <Stack spacing={0}>
                                 <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Search</Typography>
                                 <Typography variant="body1" textAlign="start" color="grey.400">
                                     Search for specific mods, by name, in the list of confirmed mods.
@@ -100,19 +100,21 @@ export default function HomePage() {
                 <Card>
                     <CardContent>
                         <Stack spacing={1}>
-                            <Grid container xs={12} spacing={2}>
-                                <Grid item xs={6} justifyContent="start">
-                                    <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Confirmed Mod List</Typography>
+                            <Stack spacing={0}>
+                                <Grid container xs={12} spacing={2}>
+                                    <Grid item xs={6} justifyContent="start">
+                                        <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">Confirmed Mod List</Typography>
+                                    </Grid>
+                                    <Grid item xs={6} alignItems="end" textAlign="end">
+                                        <IconButton size="large" onClick={() => getModData()}>
+                                            <RefreshIcon/>
+                                        </IconButton>
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={6} alignItems="end" textAlign="end">
-                                    <IconButton size="large" onClick={() => getModData()}>
-                                        <RefreshIcon/>
-                                    </IconButton>
-                                </Grid>
-                            </Grid>
-                            <Typography variant="body1" textAlign="start" color="grey.400">
-                                The following mods are part of the modpack.
-                            </Typography>
+                                <Typography variant="body1" textAlign="start" color="grey.400">
+                                    The following mods are part of the modpack.
+                                </Typography>
+                            </Stack>
                             {
                                 loading ?
                                 <Stack spacing={1}>
