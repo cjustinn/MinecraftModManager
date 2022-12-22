@@ -7,6 +7,7 @@ import { createTheme, SpeedDial, SpeedDialAction, SpeedDialIcon, ThemeProvider }
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HomeIcon from '@mui/icons-material/Home';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import DownloadingIcon from '@mui/icons-material/Downloading';
 import NotFoundPage from './Pages/NotFoundPage';
 import RequestModPage from './Pages/RequestModPage';
 import AdminPanelLoginPage from './Pages/AdminPanelLoginPage';
@@ -33,6 +34,7 @@ function App() {
             <SpeedDial ariaLabel='main page nav' sx={{ position: 'fixed', bottom: 16, right: 16 }} icon={<SpeedDialIcon/>} direction="left">
               <SpeedDialAction key="adminpanel" icon={<AdminPanelSettingsIcon/>} tooltipTitle="Admin Panel" onClick={() => navigate("/admin")}/>
               <SpeedDialAction key="requestmod" icon={<LibraryAddIcon/>} tooltipTitle="Request Mod" onClick={() => navigate("/request")}/>
+              <SpeedDialAction key="installmodpack" icon={<DownloadingIcon/>} tooltipTitle="Install Modpack" onClick={() => navigate("/install")}/>
               <SpeedDialAction key="home" icon={<HomeIcon/>} tooltipTitle="Home" onClick={() => navigate("/")}/>
             </SpeedDial>
 

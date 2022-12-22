@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanelDashboardPage from '../Pages/AdminPanelDashboardPage';
 import AdminPanelLoginPage from '../Pages/AdminPanelLoginPage';
+import DownloadPage from '../Pages/DownloadPage';
 import HomePage from '../Pages/HomePage';
 import NotFoundPage from '../Pages/NotFoundPage';
 import ProtectedRoute from '../Pages/ProtectedRoute';
@@ -26,6 +27,7 @@ export default function RouterComponent() {
                 <AdminPanelLoginPage/>
             </UnprotectedRoute>
         }/>
+        <Route path="/install" element={<DownloadPage/>}/>
         <Route path="*" element={<NotFoundPage/>}/>
     </Routes>
 }
