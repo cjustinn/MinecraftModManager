@@ -3,6 +3,8 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 import { LoginWithEmail } from "../Services/FirebaseService";
 
+import { displaySnackbar } from "../Services/HelperService";
+
 export default function AdminPanelLoginPage() {
     // React state variables used to hold the user's email and password input values.
     const [ email, setEmail ] = useState("");
@@ -18,16 +20,6 @@ export default function AdminPanelLoginPage() {
         message: 'n/a'
     });
 
-    // Function which takes a color (severity) and a message (message) and updates the snackbarData state object and display flag variable to show the snackbar with the provided data to the user.
-    const displaySnackbar = (severity, message) => {
-        setSnackbarData({
-            severity: severity,
-            message: message
-        });
-
-        setShowSnackbar(true);
-    }
-
     // Handler for when the login form is submitted.
     const handleSubmit = e => {
         e.preventDefault();
@@ -36,10 +28,10 @@ export default function AdminPanelLoginPage() {
 
         LoginWithEmail(email, password).then(r => {
             if (!r.success) {
-                displaySnackbar('error', r.error);
+                displaySnackbar(setSnackbarData, setShowSnackbar, { severity: 'error', message: r.error });
             }
         }).catch(err => {
-            displaySnackbar('error', err);
+            displaySnackbar(setSnackbarData, setShowSnackbar, { severity: 'error', message: err });
         });
 
         setProcessing(false);

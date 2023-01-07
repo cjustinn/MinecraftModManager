@@ -6,6 +6,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
+import { displaySnackbar } from "../Services/HelperService";
+
 export default function AdminPanelDashboardPage() {
     // React state variables for page loading & loading success flags.
     const [ loading, setLoading ] = useState(true);
@@ -53,16 +55,6 @@ export default function AdminPanelDashboardPage() {
     const handleChangeRowsPerPage = (e) => {
         setRowsPerPage(parseInt(e.target.value, 10));
         setPage(0);
-    }
-
-    // Function which receives a color (_s) and a message (_m) and updates the snackbarData state variable, and sets the display flag state variable to display it on the page.
-    const displaySnackbar = (_s, _m) => {
-        setSnackbarData({
-            severity: _s,
-            message: _m
-        });
-
-        setShowSnackbar(true);
     }
 
     /*
@@ -114,7 +106,7 @@ export default function AdminPanelDashboardPage() {
                         if (modResp.success) {
 
                             // Display a success message through the snackbar to the user.
-                            displaySnackbar("success", `You have successfully approved the ${_request.modName} mod!`);
+                            displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "success", message: `You have successfully approved the ${_request.modName} mod!` });
 
                             // Reset the processing flag variable to false and reload the table using the currently active filter.
                             setProcessing(false);
@@ -122,21 +114,21 @@ export default function AdminPanelDashboardPage() {
 
                         } else {
                             // Display an error message through the snackbar to the user.
-                            displaySnackbar("error", `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.`);
+                            displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "error", message: `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.` });
 
                             // Reset the processing flag variable to false.
                             setProcessing(false);
                         }
                     }).catch(err => {
                         // If there was an error creating the approved mod element in the collection, display an error message to the user using the snackbar.
-                        displaySnackbar("error", `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.`);
+                        displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "error", message: `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.` });
 
                         // Reset the processing flag variable to false.
                         setProcessing(false);
                     })
                 } else {
                     // If the request was denied and the mod request was successfully updated, display a success message to the user using the snackbar.
-                    displaySnackbar("success", `You have successfully denied ${requests.at(idx).modName}!`);
+                    displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "success", message: `You have successfully denied ${requests.at(idx).modName}!` });
 
                     // Reset the processing flag variable to false, and reload the mod requests table using the active filter.
                     setProcessing(false);
@@ -144,14 +136,14 @@ export default function AdminPanelDashboardPage() {
                 }
             } else {
                 // If updating the mod request was unsuccessfully (but the fetch did not error out) display an error message to the user using the snackbar.
-                displaySnackbar("error", `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!`);
+                displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "error", message: `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!` });
                 
                 // Reset the processing flag variable to false.
                 setProcessing(false);
             }
         }).catch(err => {
             // If updating the mod request led to the fetch erroring out, display an error message to the user using the snackbar.
-            displaySnackbar("error", `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!`);
+            displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "error", message: `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!` });
             
             // Reset the processing flag variable to false.
             setProcessing(false);

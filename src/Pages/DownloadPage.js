@@ -1,6 +1,7 @@
 import { Alert, Button, Card, CardContent, Divider, Grid, Link, Snackbar, TextField, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 import React, { useState } from 'react';
+import { displaySnackbar } from '../Services/HelperService';
 
 export default function DownloadPage() {
 
@@ -10,16 +11,6 @@ export default function DownloadPage() {
         severity: "success",
         message: "n/a"
     });
-
-    // Function which takes a color (_s) and a message (_m) and updates the snackbarData state object and display flag variable to show the snackbar with the provided data to the user.
-    const openSnackbar = (_s, _m) => {
-        setSnackbarData({
-            severity: _s,
-            message: _m
-        });
-
-        setShowSnackbar(true);
-    }
 
     return (
         <Grid container py={3} px={2}>
@@ -73,7 +64,7 @@ export default function DownloadPage() {
 
                             <Button variant="contained" onClick={() => {
                                 navigator.clipboard.writeText(`https://api.technicpack.net/modpack/the-corm-pack`);
-                                openSnackbar('success', "The API URL has been copied to your clipboard!");
+                                displaySnackbar(setSnackbarData, setShowSnackbar, { severity: 'success', message: "The API URL has been copied to your clipboard!" });
                             }}>Copy API URL</Button>
 
                             <Snackbar anchorOrigin={{ horizontal: "center", vertical: "bottom" }}
@@ -146,7 +137,7 @@ export default function DownloadPage() {
                             </Typography>
 
                             <Button variant="contained" onClick={() => {
-                                openSnackbar('success', "Your download has started!");
+                                openSnackbar(setSnackbarData, setShowSnackbar, { severity: 'success', message: "Your download has started!"});
                             }}><a style={{ textDecoration: "none", color: "black" }} href="https://www.dropbox.com/s/26jq9g7qy14inbg/TheCormPack-Manual.zip?dl=1" target="_blank" rel="noreferrer">Download Modpack Files</a></Button>
                         </Stack>
                     </CardContent>

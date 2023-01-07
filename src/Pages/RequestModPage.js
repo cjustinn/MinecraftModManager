@@ -2,6 +2,8 @@ import { Alert, Autocomplete, Button, Card, CardContent, CircularProgress, Grid,
 import { Stack } from '@mui/system';
 import React, { useState } from 'react';
 
+import { displaySnackbar } from '../Services/HelperService';
+
 export default function RequestModPage() {
     // Snackbar display flag state variable, and it's data state variable.
     const [ showSnackbar, setShowSnackbar ] = useState(false);
@@ -25,16 +27,6 @@ export default function RequestModPage() {
         'Justin'
     ]
 
-    // Function to display the snackbar with the provided color (based off the success value) and the provided message.
-    const displaySnackbar = (success, message) => {
-        setSnackbarData({
-            severity: success ? "success" : "error",
-            message: message
-        });
-
-        setShowSnackbar(true);
-    }
-
     // Handler for when the request form is submitted.
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -57,7 +49,7 @@ export default function RequestModPage() {
             }
         }).then(r => r.json()).then(resp => {
             // Display a message to the user, using the success and message values from the response.
-            displaySnackbar(resp.success, resp.message);
+            displaySnackbar(setSnackbarData, setShowSnackbar, {severity: resp.success ? 'success' : 'error', message: resp.message });
 
             if (resp.success) {
                 // If the mod request was successfully saved, reset the user input fields to be empty.
@@ -70,7 +62,7 @@ export default function RequestModPage() {
         }).catch(err => {
             setProcessing(false);
 
-            displaySnackbar(false, "There was a problem submitting your mod request. Please try again.");
+            displaySnackbar(setSnackbarData, setShowSnackbar, { severity: "error", message: "There was a problem submitting your mod request. Please try again." });
         })
     }
 
