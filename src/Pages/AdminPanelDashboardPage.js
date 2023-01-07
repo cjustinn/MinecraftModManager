@@ -1,12 +1,11 @@
-import { Alert, Autocomplete, Button, Card, CardContent, Grid, IconButton, Link, Skeleton, Snackbar, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material";
+import { Alert, Autocomplete, Button, Card, CardContent, Grid, IconButton, Skeleton, Snackbar, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 import { displaySnackbar } from "../Services/HelperService";
+import ModRequestTable from "../Components/ModRequestTableComponent";
 
 export default function AdminPanelDashboardPage() {
     // React state variables for page loading & loading success flags.
@@ -41,21 +40,6 @@ export default function AdminPanelDashboardPage() {
 
     // React state for holding the name filter before it is applied and the search is carried out.
     const [ requesterNameFilter, setRequesterNameFilter ] = useState("");
-
-    // React state variables used for the table pagination.
-    const [ page, setPage ] = useState(0);
-    const [ rowsPerPage, setRowsPerPage ] = useState(5);
-
-    // Handler for when the table pagination page is switched.
-    const handleChangePage = (e, newPage) => {
-        setPage(newPage);
-    }
-
-    // Handler for when the table pagination "rows per page" selection is changed.
-    const handleChangeRowsPerPage = (e) => {
-        setRowsPerPage(parseInt(e.target.value, 10));
-        setPage(0);
-    }
 
     /*
         Handler for when a mod on the list is either confirmed or rejected using it's control buttons.
@@ -155,7 +139,7 @@ export default function AdminPanelDashboardPage() {
         setLoading(true);
         setSuccess(false);
 
-        fetch(`${process.env.REACT_APP_API_URL}/mod-requests/${filter}${filter === "by-requester" ? `?target=${requesterNameFilter}` : ''}${filter === "by-requester" && requesterActiveFilter != "all" ? `&active=${requesterActiveFilter}` : ''}`).then(r => r.json()).then(resp => {
+        fetch(`${process.env.REACT_APP_API_URL}/mod-requests/${filter}${filter === "by-requester" ? `?target=${requesterNameFilter}` : ''}${filter === "by-requester" && requesterActiveFilter !== "all" ? `&active=${requesterActiveFilter}` : ''}`).then(r => r.json()).then(resp => {
             setSuccess(resp.success);
             setRequests(resp._data);
 
@@ -201,7 +185,6 @@ export default function AdminPanelDashboardPage() {
 
     // When the value of the active filter, the sub-filter of the by-requester type, or when the name of the target user is updated, reset the table to the first page and reload the data using the active filter data.
     useEffect(() => {
-        setPage(0);
         reloadTableData(activeFilter);
     }, [ activeFilter, requesterActiveFilter, requesterNameFilter ]);
 
@@ -338,50 +321,7 @@ export default function AdminPanelDashboardPage() {
                                 success ?
                                 (
                                     requests.length > 0 ?
-                                    <TableContainer>
-                                        <Table>
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell align="left" width="50%">Mod Name</TableCell>
-                                                    <TableCell align="right" width="20%">Requester</TableCell>
-                                                    <TableCell align="right" width="20%">Date Requested</TableCell>
-                                                    <TableCell align="right" width="10%">Controls</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {
-                                                    requests.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, idx) => {
-                                                        return (
-                                                            <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                                                <TableCell align="left">
-                                                                    <Link href={row.link}>{row.modName}</Link>
-                                                                </TableCell>
-                                                                <TableCell align="right">{row.requester}</TableCell>
-                                                                <TableCell align="right">{new Date(row.requestedDate).toLocaleString("en-US", {
-                                                                    year: "numeric",
-                                                                    month: "long",
-                                                                    day: "2-digit",
-                                                                    hour: "numeric",
-                                                                    minute: "2-digit"
-                                                                })}</TableCell>
-                                                                <TableCell align="right">
-                                                                    <IconButton disabled={processing || !row.active} color="success" onClick={() => handleResponse(true, row._id, idx)}>
-                                                                        <CheckIcon/>
-                                                                    </IconButton>
-                                                                    <IconButton disabled={processing || !row.active} color="error" onClick={() => handleResponse(false, row._id, idx)}>
-                                                                        <CloseIcon/>
-                                                                    </IconButton>
-                                                                </TableCell>
-                                                            </TableRow>
-                                                        )
-                                                    })
-                                                }
-                                            </TableBody>
-                                            <TableFooter>
-                                                <TablePagination rowsPerPageOptions={[ 5, 10, 20 ]} colSpan={4} count={requests.length} rowsPerPage={rowsPerPage} page={page} onPageChange={handleChangePage} onRowsPerPageChange={handleChangeRowsPerPage}/>
-                                            </TableFooter>
-                                        </Table>
-                                    </TableContainer>
+                                    <ModRequestTable controlHandler={handleResponse} requests={requests} processing={processing}/>
                                     :
                                     <Typography variant="body1" color="grey.500" textAlign="start">There are currently no mod requests which match the provided filters.</Typography>
                                 )

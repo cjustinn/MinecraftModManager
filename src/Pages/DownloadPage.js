@@ -137,7 +137,7 @@ export default function DownloadPage() {
                             </Typography>
 
                             <Button variant="contained" onClick={() => {
-                                openSnackbar(setSnackbarData, setShowSnackbar, { severity: 'success', message: "Your download has started!"});
+                                displaySnackbar(setSnackbarData, setShowSnackbar, { severity: 'success', message: "Your download has started!"});
                             }}><a style={{ textDecoration: "none", color: "black" }} href="https://www.dropbox.com/s/26jq9g7qy14inbg/TheCormPack-Manual.zip?dl=1" target="_blank" rel="noreferrer">Download Modpack Files</a></Button>
                         </Stack>
                     </CardContent>
