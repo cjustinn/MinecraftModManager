@@ -1,70 +1,25 @@
-# Getting Started with Create React App
+## :label: Description
+The purpose of this project was to make a simple and easy way to maintain a list of mods for Minecraft, allowing potentially multiple people to submit requests which could then be approved or rejected by an administrator, allowing for any of the mod pages to be easily accessible in the future to make it easy and quick to update everything when necessary. It also has a public non-administrator list of mods that anybody can have a look at making it particularly useful for organizing modpacks that multiple people will be making / playing. This is entirely a personal project that I threw together out of a desire to both **(a)** make my life easier since I wanted to put together a modpack and keep track of it all neatly, and **(b)** play around some more with React and Mongo.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repo contains the user-facing side of the project, and it was made with React, Firebase, and Material UI, along with some other npm packages.
 
-## Available Scripts
+## :computer: Technologies
+For this project, the user-facing side made use of the following technologies:
 
-In the project directory, you can run:
+[![React](https://img.shields.io/badge/-React-61dbfb?style=for-the-badge&logo=react&logoColor=grey)](https://reactjs.org/)
+[![Google Firebase](https://img.shields.io/badge/-Google%20Firebase-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
+[![React Router](https://img.shields.io/badge/-React%20Router-f94949?style=for-the-badge&logo=reactrouter&logoColor=white)](https://www.npmjs.com/package/react-router-dom)
+[![Material UI (MUI)](https://img.shields.io/badge/-MUI-007fff?style=for-the-badge&logo=mui&logoColor=white)](https://mui.com/)
 
-### `npm start`
+The backend API side of the project made use of the following technologies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[![MongoDB](https://img.shields.io/badge/-MongoDB-4faa41?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
+[![Node.js](https://img.shields.io/badge/-Node.js-6ea45f?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/en/)
+[![Express.js](https://img.shields.io/badge/-Express.js-black?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![Dotenv](https://img.shields.io/badge/-Dotenv-e0ca3c?style=for-the-badge&logo=dotenv&logoColor=grey)](https://www.npmjs.com/package/dotenv)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<div align="center">
+    <sub>This README was last updated on Jan. 7th, 2023</sub>
+</div>

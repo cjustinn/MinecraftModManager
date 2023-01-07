@@ -64,6 +64,7 @@ export default function HomePage() {
                         <Stack spacing={3}>
                             <Typography variant="h4" textAlign="start" fontWeight="bold" textTransform="uppercase">What is this website?</Typography>
                             <Stack spacing={2}>
+                                { /*    Eventually, I'd like to move this to be customizable rather than hard-coded into the page.   */ }
                                 <Typography variant="body1" textAlign="start">
                                     We're going to use this website to keep track of the mods which are added into our modpack, as well as making it easier for me to track which mods have been requested by y'all.
                                 </Typography>
@@ -74,7 +75,7 @@ export default function HomePage() {
                                     If you have a mod that you want to request, you can use the little plus icon in the bottom-left corner of the screen to pull open the navigation options and go to the "Request Mod" page and fill out the form there.
                                 </Typography>
                                 <Typography variant="body1" textAlign="start" color="grey.400">
-                                    <b>Please do not use anyone elses name when you're requesting a mod,</b> I want to be able to properly keep track of who wants what so I know who to talk to if there is a problem. You'll be able to revisit this website whenever you want to see a fully updated list of mods which I've confirmed as part of the modpack, but I will also do my best to either let the people who've requested a mod know directly (or in big corm) on Discord.
+                                    <b>Please do not use anyone elses name when you're requesting a mod,</b> I want to be able to properly keep track of who wants what so I know who to talk to if there is a problem. You'll be able to revisit this website whenever you want to see a fully updated list of mods which I've confirmed as part of the modpack, but I will also do my best to either let the people who've requested a mod know directly on Discord.
                                 </Typography>
                             </Stack>
                         </Stack>
