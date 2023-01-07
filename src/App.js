@@ -8,13 +8,7 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import HomeIcon from '@mui/icons-material/Home';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import DownloadingIcon from '@mui/icons-material/Downloading';
-import NotFoundPage from './Pages/NotFoundPage';
-import RequestModPage from './Pages/RequestModPage';
-import AdminPanelLoginPage from './Pages/AdminPanelLoginPage';
-import { AuthContextProvider, useAuthState } from './Services/FirebaseService';
-import AdminPanelDashboardPage from './Pages/AdminPanelDashboardPage';
-import { useEffect } from 'react';
-import ProtectedRoute from './Pages/ProtectedRoute';
+import { AuthContextProvider } from './Services/FirebaseService';
 import RouterComponent from './Components/RouterComponent';
 
 function App() {

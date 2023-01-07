@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 
 export default function DownloadPage() {
 
+    // React state variables for displaying the snackbar and populating it with configurable data.
     const [ showSnackbar, setShowSnackbar ] = useState(false);
     const [ snackbarData, setSnackbarData ] = useState({
         severity: "success",
         message: "n/a"
     });
 
+    // Function which takes a color (_s) and a message (_m) and updates the snackbarData state object and display flag variable to show the snackbar with the provided data to the user.
     const openSnackbar = (_s, _m) => {
         setSnackbarData({
             severity: _s,

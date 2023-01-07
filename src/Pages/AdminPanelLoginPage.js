@@ -4,16 +4,21 @@ import React, { useState } from "react";
 import { LoginWithEmail } from "../Services/FirebaseService";
 
 export default function AdminPanelLoginPage() {
+    // React state variables used to hold the user's email and password input values.
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    
+    // React state flag variable used to stop the login button from being pressed multiple times before it can finish attempting a login using the then-current email and password values.
     const [ processing, setProcessing ] = useState(false);
 
+    // React state variables for displaying the snackbar and populating it with configurable data.
     const [ showSnackbar, setShowSnackbar ] = useState(false);
     const [ snackbarData, setSnackbarData ] = useState({
         severity: 'success',
         message: 'n/a'
     });
 
+    // Function which takes a color (severity) and a message (message) and updates the snackbarData state object and display flag variable to show the snackbar with the provided data to the user.
     const displaySnackbar = (severity, message) => {
         setSnackbarData({
             severity: severity,
@@ -23,6 +28,7 @@ export default function AdminPanelLoginPage() {
         setShowSnackbar(true);
     }
 
+    // Handler for when the login form is submitted.
     const handleSubmit = e => {
         e.preventDefault();
 

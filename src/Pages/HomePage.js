@@ -5,14 +5,28 @@ import ModTableComponent from '../Components/ModTableComponent';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function HomePage() {
+    // React states for keeping track of when things are loading, and if the loading was successful.
     const [ loading, setLoading] = useState(true);
     const [ success, setSuccess ] = useState(true);
 
+    // React state for holding an array of objects to display on the page.
     const [ mods, setMods ] = useState([]);
 
+    // React states for managing specific result filters.
     const [ searchQuery, setSearchQuery ] = useState("");
     const [ resultsFiltered, setResultsFiltered ] = useState(false);
 
+    /*
+    
+        Using fetch, connect to the API for the mod manager and request either:
+
+        (A) All mods, if 'searchMode' param. is false
+
+        or
+
+        (B) All mods which contain the search query string (stored in 'searchQuery' state) if 'searchMode' param. is true
+    
+    */
     const getModData = (searchMode) => {
         setLoading(true);
         setSuccess(false);
@@ -29,10 +43,13 @@ export default function HomePage() {
             setLoading(false);
         });
     }
+
+    // Immediately when the page loads, get all mods.
     useEffect(() => {
         getModData(false);
     }, []);
 
+    // When the filter search button is pressed, get all mods again but passing 'true' as the 'searchMode' param.
     const handleSearch = e => {
         e.preventDefault();
 

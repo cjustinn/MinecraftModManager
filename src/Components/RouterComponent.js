@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AdminPanelDashboardPage from '../Pages/AdminPanelDashboardPage';
 import AdminPanelLoginPage from '../Pages/AdminPanelLoginPage';
@@ -8,11 +8,13 @@ import NotFoundPage from '../Pages/NotFoundPage';
 import ProtectedRoute from '../Pages/ProtectedRoute';
 import RequestModPage from '../Pages/RequestModPage';
 import UnprotectedRoute from '../Pages/UnprotectedRoute';
-import { AuthContext, useAuthState } from '../Services/FirebaseService';
+import { useAuthState } from '../Services/FirebaseService';
 
 export default function RouterComponent() {
+    // Extract the 'isAuthenticated' value from the auth context.
     const { isAuthenticated } = useAuthState();
 
+    // Return the react router list of routes to handle page navigation and page / component rendering.
     return <Routes>
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/" element={<Navigate to="/home" replace/>}/>

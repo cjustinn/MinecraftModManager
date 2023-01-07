@@ -1,4 +1,4 @@
-import { Alert, Autocomplete, Button, Card, CardContent, Grid, IconButton, LinearProgress, Link, Skeleton, Snackbar, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material";
+import { Alert, Autocomplete, Button, Card, CardContent, Grid, IconButton, Link, Skeleton, Snackbar, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 
@@ -7,46 +7,55 @@ import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 export default function AdminPanelDashboardPage() {
+    // React state variables for page loading & loading success flags.
     const [ loading, setLoading ] = useState(true);
     const [ success, setSuccess ] = useState(false);
 
+    // React state used to prevent buttons from being pressed more than once.
     const [ processing, setProcessing ] = useState(false);
 
+    // React state array used to hold the array of mod requests currently loaded by filters (or the lack thereof).
     const [ requests, setRequests ] = useState([]);
 
+    // React state for displaying the success / failure snackbar in the bottom center of the screen and managing it's coloring and text.
     const [ showSnackbar, setShowSnackbar ] = useState(false);
     const [ snackbarData, setSnackbarData ] = useState({
         severity: "success",
         message: "n/a"
     });
 
+    // React state for holding the active filter types used to build the api endpoint url.
     const [ activeFilter, setActiveFilter ] = useState("active");
+    const [ requesterActiveName, setRequesterActiveName ] = useState("");
+    const [ requesterActiveFilter, setRequesterActiveFilter ] = useState("all");
 
+    // React states for holding the filter type (and it's label for the dropdown text display) before the filter is applied.
     const [ filterType, setFilterType ] = useState("active");
     const [ filterTypeLabel, setFilterTypeLabel ] = useState("Active");
 
+    // React states for holding the sub-filter type and it's dropdown text display label before the filter is applied.
     const [ requesterActiveType, setRequesterActiveType ] = useState("all");
     const [ requesterActiveTypeLabel, setRequesterActiveTypeLabel ] = useState("All");
 
-    const [ requesterActiveName, setRequesterActiveName ] = useState("");
+    // React state for holding the name filter before it is applied and the search is carried out.
     const [ requesterNameFilter, setRequesterNameFilter ] = useState("");
-    const [ requesterActiveFilter, setRequesterActiveFilter ] = useState("all");
 
-    // Table controls
+    // React state variables used for the table pagination.
     const [ page, setPage ] = useState(0);
     const [ rowsPerPage, setRowsPerPage ] = useState(5);
 
+    // Handler for when the table pagination page is switched.
     const handleChangePage = (e, newPage) => {
         setPage(newPage);
     }
 
+    // Handler for when the table pagination "rows per page" selection is changed.
     const handleChangeRowsPerPage = (e) => {
         setRowsPerPage(parseInt(e.target.value, 10));
         setPage(0);
     }
 
-    // Functions
-
+    // Function which receives a color (_s) and a message (_m) and updates the snackbarData state variable, and sets the display flag state variable to display it on the page.
     const displaySnackbar = (_s, _m) => {
         setSnackbarData({
             severity: _s,
@@ -56,9 +65,16 @@ export default function AdminPanelDashboardPage() {
         setShowSnackbar(true);
     }
 
+    /*
+        Handler for when a mod on the list is either confirmed or rejected using it's control buttons.
+        Receives a boolean identifying if it was approved or rejected (approved), the mod id as a string,
+        and the index of the mod in the array.
+    */
     const handleResponse = (approved, modId, idx) => {
+        // Enable the processing flag state variable to prevent any control buttons from being interacted with.
         setProcessing(true);
         
+        // Send a request to the API endpoint responsible for updating mod requests, setting the request's approved status to the 'approved' value, and it's active status to false.
         fetch(`${process.env.REACT_APP_API_URL}/mod-requests/update`, {
             method: "PUT",
             body: JSON.stringify({
@@ -74,6 +90,11 @@ export default function AdminPanelDashboardPage() {
         }).then(r => r.json()).then(resp => {
             if (resp.success) {
                 if (approved) {
+                    /*
+                        If the mod request was updated successfully, and the mod was approved, make another fetch call to the API endpoint responsible for saving
+                        new mods to the approved mods collection in the database, with a new object conforming to the collection schema expectations as the
+                        request body.
+                    */
                     let _request = requests.at(idx);
                     fetch(`${process.env.REACT_APP_API_URL}/mods/add`, {
                         method: "POST",
@@ -92,38 +113,52 @@ export default function AdminPanelDashboardPage() {
                     }).then(r2 => r2.json()).then(modResp => {
                         if (modResp.success) {
 
+                            // Display a success message through the snackbar to the user.
                             displaySnackbar("success", `You have successfully approved the ${_request.modName} mod!`);
 
+                            // Reset the processing flag variable to false and reload the table using the currently active filter.
                             setProcessing(false);
                             reloadTableData(activeFilter);
 
                         } else {
+                            // Display an error message through the snackbar to the user.
                             displaySnackbar("error", `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.`);
 
+                            // Reset the processing flag variable to false.
                             setProcessing(false);
                         }
                     }).catch(err => {
+                        // If there was an error creating the approved mod element in the collection, display an error message to the user using the snackbar.
                         displaySnackbar("error", `The mod request has been closed, however there was a problem adding the mod to the confirmed list. Please contact Justin to have it manually added.`);
 
+                        // Reset the processing flag variable to false.
                         setProcessing(false);
                     })
                 } else {
+                    // If the request was denied and the mod request was successfully updated, display a success message to the user using the snackbar.
                     displaySnackbar("success", `You have successfully denied ${requests.at(idx).modName}!`);
+
+                    // Reset the processing flag variable to false, and reload the mod requests table using the active filter.
                     setProcessing(false);
                     reloadTableData(activeFilter);
                 }
             } else {
+                // If updating the mod request was unsuccessfully (but the fetch did not error out) display an error message to the user using the snackbar.
                 displaySnackbar("error", `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!`);
                 
+                // Reset the processing flag variable to false.
                 setProcessing(false);
             }
         }).catch(err => {
+            // If updating the mod request led to the fetch erroring out, display an error message to the user using the snackbar.
             displaySnackbar("error", `There was a problem ${approved ? 'approving' : 'denying'} the mod. Please try again!`);
             
+            // Reset the processing flag variable to false.
             setProcessing(false);
         })
     }
 
+    // Function to use the passed filter to use the API to get all mod requests matching the passed filter constraints.
     const reloadTableData = (filter) => {
         setLoading(true);
         setSuccess(false);
@@ -141,6 +176,7 @@ export default function AdminPanelDashboardPage() {
         
     }
 
+    // Get the subtitle for the table, which displays what filters are currently active on the displayed results, based on the current value of the 'activeFilter' state variable.
     const getTableSubtitle = () => {
         let msg = undefined;
 
@@ -162,6 +198,7 @@ export default function AdminPanelDashboardPage() {
         return msg;
     }
 
+    // Handler for when the filter form is submitted.
     const handleFilterChangeSubmit = e => {
         e.preventDefault();
 
@@ -170,11 +207,13 @@ export default function AdminPanelDashboardPage() {
         setRequesterNameFilter(requesterActiveName);
     }
 
+    // When the value of the active filter, the sub-filter of the by-requester type, or when the name of the target user is updated, reset the table to the first page and reload the data using the active filter data.
     useEffect(() => {
         setPage(0);
         reloadTableData(activeFilter);
     }, [ activeFilter, requesterActiveFilter, requesterNameFilter ]);
 
+    // Main filter autocomplete options, used for when the filter mode dropdown / autocomplete values are populated.
     const filterOptionAutocompleteList = [
         {
             label: "All",
@@ -194,6 +233,7 @@ export default function AdminPanelDashboardPage() {
         }
     ]
 
+    // Filter autocomplete options used for when the by-requester sub-filter dropdown / autocomplete values are populated.
     const filterRequesterActiveOptionsList = [
         {
             label: "All",
@@ -209,6 +249,7 @@ export default function AdminPanelDashboardPage() {
         }
     ]
 
+    // When the page first loads, call the reloadTableData function passing it the currently active filter (which should be 'all').
     useEffect(() => {
         reloadTableData(activeFilter);
     }, []);

@@ -1,21 +1,27 @@
-import { Link, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-import Paper from '@mui/material/Paper';
+import { Link, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from '@mui/material';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ModTableComponent(props) {
+    // Extract the array of rows passed to the component as a prop.
     const { rows } = props;
+
+    // React state variables for the table pagination.
     const [ page, setPage ] = useState(0);
     const [ rowsPerPage, setRowsPerPage ] = useState(10);
 
+    // Handler for the next page button in the table pagination.
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     }
 
+    // Handler for when the rows per page is changed for the table pagination.
     const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     }
+
+    // Returns a table, iterating through each element extracted from the components props rows array and creating a table row using it's data.
     return <TableContainer>
         <Table>
             <TableHead>

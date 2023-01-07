@@ -1,31 +1,31 @@
 import { Alert, Autocomplete, Button, Card, CardContent, CircularProgress, Grid, Snackbar, TextField, Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import { Stack } from '@mui/system';
 import React, { useState } from 'react';
 
 export default function RequestModPage() {
+    // Snackbar display flag state variable, and it's data state variable.
     const [ showSnackbar, setShowSnackbar ] = useState(false);
     const [ snackbarData, setSnackbarData ] = useState({
         severity: 'success',
         message: 'You have successfully requested the mod!'
     });
 
+    // React state variables used to hold the user's input and populate the mod request fetch POST call when the form is submitted.
     const [ modName, setModName ] = useState("");
     const [ modLink, setModLink ] = useState("");
     const [ requesterName, setRequesterName ] = useState("");
 
+    // Processing flag variable used to stop multiple submits from happening before the previous can be fully handled.
     const [ processing, setProcessing ] = useState(false);
 
+    // Array holding the string values used to populate the "requester name" dropdown / autocomplete field options.
     const autocompleteOptions = [
-        'August',
-        'Ben',
-        'Dawn',
-        'Ian',
-        'Justin',
-        'Mason',
-        'Soy',
-        'Tommy'
+        'John Doe',
+        'Jane Doe',
+        'Justin'
     ]
 
+    // Function to display the snackbar with the provided color (based off the success value) and the provided message.
     const displaySnackbar = (success, message) => {
         setSnackbarData({
             severity: success ? "success" : "error",
@@ -35,11 +35,13 @@ export default function RequestModPage() {
         setShowSnackbar(true);
     }
 
+    // Handler for when the request form is submitted.
     const handleFormSubmit = (e) => {
         e.preventDefault();
 
         setProcessing(true);
         
+        // Send a POST request to the API endpoint responsible for saving new mod requests to the MongoDB collection, with the body being a new object containing all of the user-input values formatted to match the expected schema format.
         fetch(`${process.env.REACT_APP_API_URL}/mod-requests/add`, {
             method: "POST",
             body: JSON.stringify({
@@ -54,9 +56,11 @@ export default function RequestModPage() {
                 "Content-Type": "application/json"
             }
         }).then(r => r.json()).then(resp => {
+            // Display a message to the user, using the success and message values from the response.
             displaySnackbar(resp.success, resp.message);
 
             if (resp.success) {
+                // If the mod request was successfully saved, reset the user input fields to be empty.
                 setModName("");
                 setModLink("");
                 setRequesterName("");
